@@ -21,6 +21,10 @@
               <!-- Nav Link -->
               <router-link class="nav-link" to="/about">About Us</router-link>
             </li>
+            <li class="nav-item">
+              <!-- Nav Link -->
+              <router-link class="nav-link" to="/blog">Blog.</router-link>
+            </li>
             <!-- <li class="nav-item">
               
               <a class="nav-link" data-scroll href="#portfolio">Portfolio.</a>

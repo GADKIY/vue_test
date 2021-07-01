@@ -22,10 +22,26 @@ const routes = [
     path: '/contacts',
     name: 'Contacts',
     component: () => import('../views/Contacts.vue')
+  },
+  {
+    path: '/blog',
+    name: 'Blog',
+    component: () => import('../views/blog/list.vue'),
+    /* children:[{
+      path:'/:id',
+      name:'BlogDetail',
+      component:()=> import('../views/blog/detail.vue')
+    }] */
+  },
+  {
+    path:'/blog/:id',
+    name: 'BlogDetail',
+    component: () => import('../views/blog/detail.vue')
   }
 ]
 
 const router = new VueRouter({
+  base:'/',
   routes
 })
 
