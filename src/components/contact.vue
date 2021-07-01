@@ -7,10 +7,10 @@
           <h2>Get in Touch</h2>
         </div>
       </div>
-      <form id="contact_form" @submit="validateAndSend(e)">
+      <form id="contact_form" @submit="validateAndSend">
       <div class="row">
         <div class="col-12 col-lg-6 email">
-          <input placeholder="Your email" type="email" id="email" pattern=".+@globex.com" size="30" required v-model="email">
+          <input placeholder="Your email" type="email" id="email" size="30" required v-model="email">
         </div>
         <div class="col-12 col-lg-6 email">
           <input placeholder="Subject" type="subject" id="subject" size="30" required v-model="subject">
@@ -57,21 +57,30 @@ button[type="submit"]{
 </style>
 
 <script>
+import axios from 'axios';
 export default {
     name: "contact",
     data(){
         return{
             email:'',
             subject:'',
-            message:''
+            message:'',
+            BOT_TOKEN: '1805815235:AAHhJ2ANt1NK959V7ZydmoGYllw7B9KQjVs',
+            CHAT_ID: '-1001420667055'
         }
     },
     methods:{
         validateAndSend(e){
-            e.preventDefault();
+            e.preventDefault();            
             let valid = true;
+            let text = this.email + ' '+this.subject+ ' '+this.message;
             if(valid){
-                console.log();
+                axios.get('https://api.telegram.org/bot' + this.BOT_TOKEN + '/sendMessage?chat_id=' + this.CHAT_ID + '&text=' + text)
+                    .then(()=>{
+                        this.email = '';
+                        this.subject = '';
+                        this.message = '';
+                    })
             }
         }
     }
