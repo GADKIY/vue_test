@@ -37,10 +37,11 @@
               <router-link class="nav-link" to="/contacts">Contact Us</router-link>              
             </li>
           </ul>
-          <form data-scroll href="#contact-us" class="contact-btn form-inline my-2 my-lg-0">
+          <div data-scroll href="#contact-us" class="contact-btn form-inline my-2 my-lg-0">
             <!-- Contacgt Us Button -->
-            <button>Contact Us</button>
-          </form>
+            <button @click="show = true">Contact Us</button>
+            <button @click="showModal = true">Contact Us2</button>
+          </div>
         </div>
       </nav>
     </div>
@@ -60,14 +61,96 @@
         </div>
       </div>
     </div>
+    <vodal :show="show" animation="rotate" @hide="show = false">
+        <h3 class="text-center">Callback</h3>
+        <form @submit="sendCallback">
+            <div class="form-element mb-3">
+                <input type="text" class="form-control" placeholder="Name">
+            </div>
+            <div class="form-element mb-3">
+                <input type="text" class="form-control" placeholder="Email">
+            </div>
+            <div class="form-element mb-3">
+                <input type="text" class="form-control" placeholder="Phone">
+            </div>
+            <div class="form-element mb-3">
+                <textarea type="text" class="form-control" placeholder="Message"></textarea>
+            </div>
+            <div class="text-">
+                <button type="submit" class="btn">Send</button>
+            </div>
+        </form>        
+    </vodal>
+
+    <modal v-if="showModal" @close="showModal = false" :class="showModal?opened:''">
+        <div slot="header">
+            My header title
+        </div>
+        <div slot="body">
+            <form @submit="sendCallback">
+                <div class="form-element mb-3">
+                    <input type="text" class="form-control" placeholder="Name">
+                </div>
+                <div class="form-element mb-3">
+                    <input type="text" class="form-control" placeholder="Email">
+                </div>
+                <div class="form-element mb-3">
+                    <input type="text" class="form-control" placeholder="Phone">
+                </div>
+                <div class="form-element mb-3">
+                    <textarea type="text" class="form-control" placeholder="Message"></textarea>
+                </div>
+                <div class="text-">
+                    <button type="submit" class="btn">Send</button>
+                </div>
+            </form> 
+        </div>
+    </modal>
   </header>
 </template>
 
+<style lang="scss">
+
+
+  .vodal-dialog{
+      height: auto!important;
+      top: 50%!important;
+      bottom: unset;
+      transform: translateY(-50%)!important;
+  }  
+</style>
+
 <script>
 
+import Vue from 'vue';
+import Vodal from 'vodal';
+
+import "vodal/common.css";
+import "vodal/rotate.css";
+
+Vue.component(Vodal.name, Vodal);
+
+//use other component
+import modal from '@/components/modal.vue'
+import '../assets/css/modal.scss';
 
 export default {
-    name:'siteHeader'
+    name:'siteHeader',
+    components:{
+        modal        
+    },
+    data() {
+		return {
+			show: false,
+            showModal: false
+		}
+    },
+    methods:{
+        sendCallback(e){
+            e.preventDefault();
+            this.show = false;
+        }
+    }
     
 }
 </script>
